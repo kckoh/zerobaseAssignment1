@@ -1,5 +1,7 @@
 
 <%@ page import="com.example.zerobaseassignment.sqlite.SQLiteJDBCTable" %>
+<%@ page import="com.example.zerobaseassignment.sqlite.SeoulJson" %>
+<%@ page import="java.util.List" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html>
@@ -53,6 +55,25 @@
 <br/>
 <a href="hello-servlet">Hello Servlet</a>
 
+<%
+    SQLiteJDBCTable sqLiteJDBCTable = new SQLiteJDBCTable();
+
+
+    if (request.getParameter("lat")== null) {
+        System.out.println("Nothing is provided");
+    } else if (request.getParameter("lat").equals("0.0")) {
+        System.out.println("Please provide lat and long");
+    } else {
+        String longdi = request.getParameter("long");
+        String lat = request.getParameter("lat");
+        List<SeoulJson> longLat = sqLiteJDBCTable.findLongLat(longdi, lat);
+
+
+    }
+
+
+%>
+
 <table id="customers">
     <tr>
         <th>거리</th>
@@ -72,27 +93,13 @@
         <th>Y좌표</th>
         <th>작업일자</th>
     </tr>
+    <tr>
+        <td></td>
+    </tr>
+
+
 </table>
-<%
-    SQLiteJDBCTable sqLiteJDBCTable = new SQLiteJDBCTable();
 
-
-    if (request.getParameter("lat")== null) {
-        System.out.println("Nothing is provided");
-    } else if (request.getParameter("lat").equals("0.0")) {
-        System.out.println("Please provide lat and long");
-    } else {
-        String longdi = request.getParameter("long");
-        String lat = request.getParameter("lat");
-        sqLiteJDBCTable.findLongLat(longdi, lat);
-
-        System.out.println(request.getParameter("long"));
-        System.out.println(request.getParameter("lat"));
-
-    }
-
-
-%>
 
 <script>
     var x = document.getElementById("lat");
